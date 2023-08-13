@@ -85,7 +85,7 @@ def record_video():
 #ADD CREDENTIALS OF BOT HERE
 CREDS = {'email' : "skynotakash@gmail.com", 'passwd': "123incorrect123"}
 name = "Akash Singh"
-meeting_id = "sfp-pnrj-aae"
+meeting_id = "iav-asmx-kjj"
 meeting_end = False
 
 #Add path to your chromedriver
