@@ -136,7 +136,7 @@ function HomePage() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="p-6 bg-primary shadow-lg rounded-lg hover:scale-105 transition-transform"
+                className="p-6 bg-white shadow-lg rounded-lg hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <div className="text-3xl mb-4 text-accent">{feature.icon}</div>
                 <h3 className="text-xl text-white font-semibold mb-2">{feature.title}</h3>

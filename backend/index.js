@@ -26,8 +26,15 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // User schema and model
 const UserSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
+  usn: { type: String, required: true ,unique:true},
+  name: { type: String, required: true },
   password: { type: String, required: true },
+  email: { type: String, required: true },
+  section: { type: String, required: true },
+  branch: { type: String, required: true },
+  phone: { type: String, required: true },
+  sem: { type: String, required: true },
+  pdfLinks: [{ type: String }], // Array of PDF links
 });
 
 const User = mongoose.model('User', UserSchema);
@@ -37,31 +44,43 @@ const User = mongoose.model('User', UserSchema);
 // Register endpoint
 app.post('/signup', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { name, password, email, usn, section, branch, phone, sem } = req.body;
 
-    // Hash the password
+    // You can add server-side validation here if needed
+    // For example, check if the username is already taken
+
+    // Hash the password before saving to the database
     const hashedPassword = await bcrypt.hash(password, 10);
-    
-    console.log(`Username: ${username}, Password: ${password}`);
+
     // Create a new user
-    const user = new User({ username, password: hashedPassword });
+    const newUser = new User({
+      name,
+      password: hashedPassword,
+      email,
+      usn,
+      section,
+      branch,
+      phone,
+      sem,
+    });
 
-    await user.save();
+    // Save the user to the database
+    await newUser.save();
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: 'Sign-up successful' });
   } catch (error) {
+    console.error('Sign-Up error:', error);
     res.status(500).json({ error: 'An error occurred' });
   }
 });
-
 // ... (Other endpoints and routes)
 // Sign-In endpoint
 app.post('/login', async (req, res) => {
     try {
-      const { username, password } = req.body;
+      const { usn, password } = req.body;
   
       // Find the user by username
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ usn });
   
       // If the user is not found or password is incorrect, respond with an error
       if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -69,11 +88,34 @@ app.post('/login', async (req, res) => {
       }
   
       // Here, you can generate a JWT token for the user and send it back if needed
-  
-      res.status(200).json({ message: 'Sign-in successful' });
+      res.status(200).json({ usn:user.usn ,message: 'Sign-in successful' });
     } catch (error) {
       res.status(500).json({ error: 'An error occurred' });
     }
   });
+
+  // Get user profile endpoint
+app.get('/user/:usn', async (req, res) => {
+  try {
+    const { usn } = req.params;
+    console.log(usn);
+    // Find the user by username
+    const user = await User.findOne({ usn });
+    console.log(user);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Return user details excluding password
+    const { password, ...userDetails } = user.toObject();
+    res.json(userDetails);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+
 // Start the server
 app.listen(port, () => console.log(`Server is running on port ${port}`));
