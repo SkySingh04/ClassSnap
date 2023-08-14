@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './components/navbar';
+import Footer from './components/footer';
 
 function LoginPage() {
   const [usn, setUsn] = useState('');
@@ -23,12 +25,14 @@ function LoginPage() {
 
   return (
     <div>
+      <Navbar />
       <h2>Login</h2>
       <input type="text" placeholder="Username" value={usn} onChange={(e) => setUsn(e.target.value)} />
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
       {loginError && <p>Invalid username or password</p>}
       <button onClick={handleLogin}>Login</button>
+      <Footer />
     </div>
   );
 }
