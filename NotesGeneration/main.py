@@ -88,9 +88,11 @@ name = "Akash Singh"
 meeting_id = "iav-asmx-kjj"
 meeting_end = False
 
-#Add path to your chromedriver
-service = Service(r"C:\Users\USER\chromedriver-win64\chromedriver-win64\chromedriver.exe")
-driver= webdriver.Chrome(service=service)
+#chromedriver added to the repo
+service = Service(r"NotesGeneration\chromedriver.exe")
+options = webdriver.ChromeOptions()
+options.add_argument('--headless')
+driver= webdriver.Chrome(service=service, options=options)
 
 
 Glogin(CREDS['email'], CREDS['passwd'],driver)
