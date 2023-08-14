@@ -42,6 +42,9 @@ function SignUpPage() {
       window.alert('Sign-up successful!');
 
       // Assuming you want to navigate to a dashboard or profile page after successful sign-up
+      const tokenResponse = await axios.post('http://localhost:5000/login', { usn, password });
+      const token = tokenResponse.data.token;
+      localStorage.setItem('token', token);
       navigate(`/user/${usn}`); // Change '/dashboard' to the desired route
 
     } catch (error) {
