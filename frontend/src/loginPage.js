@@ -24,16 +24,44 @@ function LoginPage() {
   };
 
   return (
-    <div>
-      <Navbar />
-      <h2>Login</h2>
-      <input type="text" placeholder="Username" value={usn} onChange={(e) => setUsn(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+    <div
+    className="min-h-screen bg-cover bg-center flex flex-col"
+    style={{  backgroundColor: '#DAFFFB', }}
+  >
+    <Navbar />
 
-      {loginError && <p>Invalid username or password</p>}
-      <button onClick={handleLogin}>Login</button>
-      <Footer />
+    <div className="flex-grow flex justify-center items-center">
+      <div className="bg-white p-8 rounded-md shadow-md w-96">
+        <h1 className="text-3xl font-semibold mb-4">Welcome to ClassSnap</h1>
+        <h2 className="text-xl font-medium mb-6">Login to your account</h2>
+        <form className="space-y-4">
+          <input
+            type="text"
+            placeholder="Username/USN"
+            value={usn}
+            onChange={(e) => setUsn(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-300"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-300"
+          />
+          {loginError && <p className="text-red-500 text-sm">Invalid username or password</p>}
+          <button
+            onClick={handleLogin}
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors duration-300"
+          >
+            Sign in
+          </button>
+        </form>
+      </div>
     </div>
+
+    <Footer />
+  </div>
   );
 }
 
