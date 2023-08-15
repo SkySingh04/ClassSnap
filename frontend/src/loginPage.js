@@ -13,6 +13,10 @@ function LoginPage() {
     try {
       const response = await axios.post('http://localhost:5000/login', { usn, password });
       console.log(response.data);
+
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      
       navigate(`/user/${response.data.usn}`);
        // Response from the backend
     } catch (error) {
