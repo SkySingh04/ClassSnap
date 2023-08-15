@@ -15,7 +15,7 @@ function LoginPage() {
     try {
       const response = await axios.post('http://localhost:5000/login', { usn, password });
       console.log(response.data);
-
+     
       const token = response.data.token;
       localStorage.setItem('token', token);
       
@@ -53,6 +53,7 @@ function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full px-4 py-2 border bg-background rounded-md focus:ring focus:ring-blue-300"
           />
+          </form>
           {loginError && <p className="text-red-500 text-sm">Invalid username or password</p>}
           <button
             onClick={handleLogin}
@@ -60,7 +61,6 @@ function LoginPage() {
           >
             Sign in
           </button>
-        </form>
       </div>
     </div>
 
