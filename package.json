@@ -2,6 +2,7 @@
   "dependencies": {
     "autoprefixer": "^10.4.15",
     "build": "^0.1.4",
+    "cloudinary": "^1.40.0",
     "postcss": "^8.4.27",
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.10.1",
