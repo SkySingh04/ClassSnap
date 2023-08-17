@@ -44,17 +44,18 @@ function LoginPage() {
             placeholder="Username/USN"
             value={usn}
             onChange={(e) => setUsn(e.target.value)}
-            className="w-full px-4 py-2 bg-background border rounded-md focus:ring focus:ring-blue-300"
+            className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-300"
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border bg-background rounded-md focus:ring focus:ring-blue-300"
+            className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-300"
           />
           </form>
           {loginError && <p className="text-red-500 text-sm">Invalid username or password</p>}
+          <br />
           <button
             onClick={handleLogin}
             className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-600 transition-colors duration-300"
