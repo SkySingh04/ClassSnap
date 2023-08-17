@@ -17,14 +17,8 @@ function SignUpPage() {
   const [sem, setSem] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [signUpError, setSignUpError] = useState(false); // State to track sign-in error
-  const [imageFile, setImageFile] = useState(null);
 
   const navigate = useNavigate();
-
-  const handleImageUpload = (event) => {
-    const selectedImage = event.target.files[0];
-    setImageFile(selectedImage);
-  };
 
   const handleSignUp = async () => {
     try {
@@ -43,7 +37,6 @@ function SignUpPage() {
         branch,
         phone,
         sem,
-        image: imageFile,
       };
 
       const response = await axios.post('http://localhost:5000/signup', userData);
@@ -147,12 +140,6 @@ function SignUpPage() {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-300 mb-6"
-        />
-        <input
-         type="file"
-         accept="image/*"
-         onChange={handleImageUpload}
-         className="w-full mb-2"
         />
 
         {signUpError && <p className="text-red-500">Sign-up failed. Please check your input and try again.</p>}

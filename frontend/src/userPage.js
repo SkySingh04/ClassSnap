@@ -40,7 +40,6 @@ function UserPage() {
   return (
     <div className="bg-background text-primary min-h-screen flex flex-col relative">
       <Navbar />
-      
       {/* User Information and Notes Section */}
       <section className="py-8">
         <div className="container mx-auto">
@@ -96,8 +95,11 @@ function UserPage() {
           </div>
         </div>
       </section>
-      
-      
+      <div className="flex justify-end pr-4">
+        <button onClick={handleLogout} className="w-20 bg-primary text-white py-2 rounded-md hover:bg-blue-600 transition-colors duration-300 mb-2">
+          Logout
+        </button>
+      </div>
       <Footer />
     </div>
   );
