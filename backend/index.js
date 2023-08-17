@@ -5,9 +5,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+const jwt =require('jsonwebtoken')
 require('dotenv').config();
 
-
+const secretKey=process.env.secretKey;
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -17,6 +18,23 @@ app.use(cors());
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+
+// Middleware to verify JWT token
+const authenticateToken = (req, res, next) => {
+  const token = req.header('Authorization');
+  if (!token) {
+    return res.status(401).json({ error: 'Access denied' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    res.status(403).json({ error: 'Invalid token' });
+  }
+};
 
 // MongoDB connection
 const dbURI = process.env.dbURI;
@@ -62,6 +80,7 @@ app.post('/signup', async (req, res) => {
       branch,
       phone,
       sem,
+      pdfLinks: [],
     });
 
     // Save the user to the database
@@ -86,22 +105,20 @@ app.post('/login', async (req, res) => {
       if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
-  
-      // Here, you can generate a JWT token for the user and send it back if needed
-      res.status(200).json({ usn:user.usn ,message: 'Sign-in successful' });
+      const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
+
+      res.json({ token,usn:user.usn });
     } catch (error) {
       res.status(500).json({ error: 'An error occurred' });
     }
   });
 
   // Get user profile endpoint
-app.get('/user/:usn', async (req, res) => {
+app.get('/user/:usn', authenticateToken,async (req, res) => {
   try {
     const { usn } = req.params;
-    console.log(usn);
     // Find the user by username
     const user = await User.findOne({ usn });
-    console.log(user);
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
