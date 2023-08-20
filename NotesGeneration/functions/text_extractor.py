@@ -26,25 +26,25 @@ def audio_to_text(video_path: str) -> None:
     # Extract the audio from the video
     audio = video.audio
     # Save the audio to a file
-    audio.write_audiofile("audio.wav")
+    audio.write_audiofile("NotesGeneration/Output/audio.wav")
 
 
     # Create a transcriber object.
     transcriber = aai.Transcriber()
 
 
-    transcript = transcriber.transcribe("audio.wav")
+    transcript = transcriber.transcribe("NotesGeneration/Output/audio.wav")
 
 
     # transcript = transcriber.transcribe("https://storage.googleapis.com/aai-web-samples/espn-bears.m4a")
 
-    with open("audio_text.txt", "w") as f:
+    with open("NotesGeneration/Output/audio_text.txt", "w") as f:
         f.write(transcript.text)
 
 
 # --- From Video File ---
 def write_to_file(text):
-    with open("video_text.txt", "a") as f:
+    with open("NotesGeneration/Output/video_text.txt", "a") as f:
         f.write(text)
         f.write("\n")
 
@@ -61,7 +61,7 @@ def video_to_text(video_path: str) -> None:
 
     # Open the video file
     cap = cv2.VideoCapture(fr"{video_path}")
-    open("video_text.txt", "w").close()
+    open("NotesGeneration/Output/video_text.txt", "w").close()
 
 
     # Read the first frame
@@ -141,11 +141,11 @@ def extract_text(video_path: str) -> None:
     video_to_text(video_path)
     
     # Creating final text file
-    with open("video_text.txt", "r") as f:
+    with open("NotesGeneration/Output/video_text.txt", "r") as f:
         video_text = f.read()
-    with open("audio_text.txt", "r") as f:
+    with open("NotesGeneration/Output/audio_text.txt", "r") as f:
         audio_text = f.read()
-    with open("final_text.txt", "w") as f:
+    with open("NotesGeneration/Output/final_text.txt", "w") as f:
         f.write(video_text)
         f.write("\n")
         f.write(audio_text)
