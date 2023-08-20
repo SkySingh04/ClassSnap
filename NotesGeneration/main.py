@@ -90,9 +90,7 @@ meeting_end = False
 
 #chromedriver added to the repo
 service = Service(r"NotesGeneration\chromedriver.exe")
-options = webdriver.ChromeOptions()
-options.add_argument('--headless')
-driver= webdriver.Chrome(service=service, options=options)
+driver= webdriver.Chrome(service=service)
 
 
 Glogin(CREDS['email'], CREDS['passwd'],driver)

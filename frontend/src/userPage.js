@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
-
+import imgAkash from "./images/AkashSingh.jpeg"
 function UserPage() {
   const [userData, setUserData] = useState(null);
   const { usn } = useParams();
@@ -70,7 +70,7 @@ function UserPage() {
             </div>
             <div className="md:col-span-1">
               <div className="m-5 bg-primary p-4 rounded-lg shadow-md">
-                <img src={userData.image} alt="User Profile" className="h-9/10 w-9/10 rounded-full mx-auto mb-2" />
+                <img src={imgAkash} alt="User Profile" className="h-9/10 w-9/10 rounded-full mx-auto mb-2" />
                 <h2 className="text-3xl font-semibold text-white">{userData.name}</h2>
                 <p className="text-lg text-white">{userData.email}</p>
               </div>
