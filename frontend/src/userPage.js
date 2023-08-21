@@ -12,6 +12,7 @@ function UserPage() {
   const { usn } = useParams();
   const navigate = useNavigate();
   const userNotes =[]
+  
   useEffect(() => {
     // Fetch user details based on the username from the backend
     const fetchUserData = async () => {
@@ -25,15 +26,18 @@ function UserPage() {
         setUserData(response.data);
         console.log(response.data);
       } catch (error) {
+        if(error.response.status===401)
+        {
+           alert("Not authorized")
+           navigate('/login');
+        }
         console.error('Error fetching user data:', error);
+
       }
     };
-    
-    
-    
-
     fetchUserData();
-  }, [usn]);
+
+  }, [usn,navigate]);
 
   const handleLogout = () => {
     // Clear the token from local storage
