@@ -1,0 +1,25 @@
+TO-DO LIST:
+
+1.Machine Learning: 
+	a.Find a ML model suitable for text summarization
+	b. Import video and audio text extraction code into our web driver code
+	c.Build the ML model
+	d. Once meeting ends, recording should stop and then video and audio should be extracted
+	e.Text file to be sent through ML model
+	f. PDF file to be generated
+	g. PDF file to be uploaded to cloud
+2. Website:
+	a. Build an interface for user to enter meeting ID on user page 
+	b. After entering meeting id, the web driver code should start running( How to implement this?)
+3.Presentation and Report:
+	a. Finish updating ppt
+	b. Finish Report
+4.Research paper
+	a. Ask seniors what is a research paper and if it is worth doing?
+	b. Start research paper
+5. Demo Video:
+	a. Make a demo video of everything working
+	b. Add to ppt
+6.Printouts:
+	a. Get print of report
+	b.Get print of research paper
