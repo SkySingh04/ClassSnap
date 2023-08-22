@@ -7,17 +7,22 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 const jwt =require('jsonwebtoken')
 require('dotenv').config();
+const { exec } = require('child_process');
 
 const secretKey=process.env.secretKey;
 const app = express();
 const port = process.env.PORT || 5000;
 
 // Enable CORS
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your React app's domain
+}));
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+
 
 
 // Middleware to verify JWT token
@@ -113,6 +118,21 @@ app.post('/login', async (req, res) => {
     }
   });
 
+
+  app.post('/run-webdriver', (req, res) => {
+    // Execute the Python script using child_process
+    exec('python test.py', (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error running Python script: ${error.message}`);
+        return res.status(500).send('Internal Server Error');
+      }
+  
+      console.log(`Python script output: ${stdout}`);
+      res.status(200).send('Python script executed successfully');
+    });
+  });
+
+  
   // Get user profile endpoint
 app.get('/user/:usn', authenticateToken,async (req, res) => {
   try {

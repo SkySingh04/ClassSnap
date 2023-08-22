@@ -5,10 +5,26 @@ import Navbar from './components/navbar';
 import Footer from './components/footer';
 import imgAkash from "./images/AkashSingh.jpeg"
 function UserPage() {
+  const [isRunning, setIsRunning] = useState(false);
+
+ 
   const [userData, setUserData] = useState(null);
   const { usn } = useParams();
   const navigate = useNavigate();
   const userNotes = ["1","2","3"]; // Placeholder for user notes
+
+  const handleRunWebdriver = async () => {
+    setIsRunning(true);
+    try {
+      const response = await axios.post('http://localhost:5000/run-webdriver');
+      console.log(response.data); // Display response from the backend
+    } catch (error) {
+      console.error('Error running Python script:', error);
+    } finally {
+      setIsRunning(false);
+    }
+  };
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -41,6 +57,13 @@ function UserPage() {
     <div className="bg-background text-primary min-h-screen flex flex-col relative">
       <Navbar />
       {/* User Information and Notes Section */}
+      <button
+        onClick={handleRunWebdriver}
+        disabled={isRunning}
+        className="bg-primary text-white px-4 py-2 rounded-md"
+      >
+        {isRunning ? 'Running...' : 'Run Python Script'}
+      </button>
       <section className="py-8">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
