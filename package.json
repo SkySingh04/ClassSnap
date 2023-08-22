@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.11.1",
     "autoprefixer": "^10.4.15",
     "build": "^0.1.4",
     "cloudinary": "^1.40.0",
