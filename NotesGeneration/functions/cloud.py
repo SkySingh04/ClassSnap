@@ -12,7 +12,10 @@ cloudinary.config(
 pdf_path = './NotesGeneration/assets/rearranged.pdf'
 
 # Upload the PDF
-result = cloudinary.uploader.upload(pdf_path, resource_type='auto')
+result = cloudinary.uploader.upload(pdf_path, resource_type='auto',overwrite=True)
 
 # Print the result
 print(result)
+
+pdf_url = result['url']
+print("Uploaded PDF URL:", pdf_url)
