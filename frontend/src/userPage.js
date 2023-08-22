@@ -4,10 +4,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import imgAkash from "./images/AkashSingh.jpeg"
+import { text } from '@cloudinary/url-gen/qualifiers/source';
 function UserPage() {
   const [isRunning, setIsRunning] = useState(false);
 
- 
+  const [email, setemail] = useState('');
+  const [password, setPassword] = useState('');
+  const [meetingid, setmeetingid] = useState('');
   const [userData, setUserData] = useState(null);
   const { usn } = useParams();
   const navigate = useNavigate();
@@ -63,13 +66,7 @@ function UserPage() {
     <div className="bg-background text-primary min-h-screen flex flex-col relative">
       <Navbar />
       {/* User Information and Notes Section */}
-      <button
-        onClick={handleRunWebdriver}
-        disabled={isRunning}
-        className="bg-primary text-white px-4 py-2 rounded-md"
-      >
-        {isRunning ? 'Running...' : 'Run Python Script'}
-      </button>
+      
       <section className="py-8">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -107,7 +104,38 @@ function UserPage() {
           </div>
         </div>
       </section>
-      
+      {/* Run Python Script Button */}
+      <div className="flex justify-center">
+      <section className="bg-gray-300 p-8 rounded-md shadow-md w-96 mt-12 mb-12 ">
+        <h2 className="text-2xl font-semibold mb-4">Join Meeting</h2>
+        <input 
+        type = "email" 
+        placeholder="Enter email" 
+        className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-300 mb-2"
+        onChange={(e) => setemail(e.target.value)}
+        />
+        <input 
+        type = "password" 
+        placeholder="Enter Password" 
+        className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-300 mb-2"
+        onChange={(e) => setPassword(e.target.value)}
+        />
+        <input 
+        type = "text" 
+        placeholder="Enter Meeting ID" 
+        className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-300 mb-2"
+        onChange={(e) => setmeetingid(e.target.value)}
+        />
+      <button
+        onClick={handleRunWebdriver}
+        disabled={isRunning}
+        className="bg-primary text-white px-4 py-2 rounded-md"
+      >
+        {isRunning ? 'Running...' : 'Join meeting'}
+      </button>
+      </section>
+
+      </div>
       {/* User Notes Section */}
       <section className="py-8">
         <div className="container mx-auto px-8">
