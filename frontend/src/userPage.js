@@ -4,10 +4,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import imgAkash from "./images/AkashSingh.jpeg"
-import { text } from '@cloudinary/url-gen/qualifiers/source';
+
 function UserPage() {
   const [isRunning, setIsRunning] = useState(false);
-
+   
+  const [name,setName]=useState('')
   const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
   const [meetingid, setmeetingid] = useState('');
@@ -19,7 +20,7 @@ function UserPage() {
   const handleRunWebdriver = async () => {
     setIsRunning(true);
     try {
-      const response = await axios.post('http://localhost:5000/run-webdriver');
+      const response = await axios.post('http://localhost:5000/run-webdriver',{email,password,meetingid,name});
       console.log(response.data); // Display response from the backend
     } catch (error) {
       console.error('Error running Python script:', error);
@@ -39,6 +40,7 @@ function UserPage() {
           },
         });
         setUserData(response.data);
+        setName(response.data.name);
       } catch (error) {
         if(error.response.status===401)
         {
