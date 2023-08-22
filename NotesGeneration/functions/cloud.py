@@ -1,11 +1,16 @@
 import cloudinary
 import cloudinary.uploader
+from dotenv import load_dotenv
+
+# Load variables from .env file into environment
+import os
+load_dotenv()
 
 # Configure Cloudinary with your credentials
 cloudinary.config(
-    cloud_name='dptrkbl3o',
-    api_key='613799345313771',
-    api_secret='_u5ycqFktrQ7gK61fdfHjJDWjWU'
+    cloud_name=os.getenv('cloud_name'),
+    api_key=os.getenv('api_key'),
+    api_secret=os.getenv('api_secret')
 )
 
 # Path to the PDF file you want to upload
