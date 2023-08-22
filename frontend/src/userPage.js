@@ -37,12 +37,18 @@ function UserPage() {
         });
         setUserData(response.data);
       } catch (error) {
+        if(error.response.status===401)
+        {
+           alert("Not authorized")
+           navigate('/login');
+        }
         console.error('Error fetching user data:', error);
+
       }
     };
-
     fetchUserData();
-  }, [usn]);
+
+  }, [usn,navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
