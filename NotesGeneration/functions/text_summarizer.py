@@ -1,5 +1,4 @@
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer
-from reportlab.pdfgen import canvas
 
 tokenizer = PegasusTokenizer.from_pretrained("google/pegasus-xsum")
 model = PegasusForConditionalGeneration.from_pretrained("google/pegasus-xsum")
