@@ -27,4 +27,6 @@ def summarise(text_file: str):
 
     # Join the summaries back into a single string
     summary_text = "\n".join(summaries)
-    print(summary_text)
+    
+    with open(r"NotesGeneration\Output\summarized.txt", "w") as f:
+        f.write(summary_text)
