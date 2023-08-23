@@ -3,7 +3,11 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
-import imgAkash from "./images/AkashSingh.jpeg"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import Avatar from 'react-avatar';
+
+
 
 function UserPage() {
   const [isRunning, setIsRunning] = useState(false);
@@ -15,7 +19,7 @@ function UserPage() {
   const [userData, setUserData] = useState(null);
   const { usn } = useParams();
   const navigate = useNavigate();
-  const userNotes = ["1","2","3"]; // Placeholder for user notes
+  
 
   const handleRunWebdriver = async () => {
     setIsRunning(true);
@@ -28,7 +32,9 @@ function UserPage() {
       setIsRunning(false);
     }
   };
-  
+
+
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -98,7 +104,7 @@ function UserPage() {
             </div>
             <div className="md:col-span-1">
               <div className="m-5 bg-primary p-4 rounded-lg shadow-md">
-                <img src={imgAkash} alt="User Profile" className="h-9/10 w-9/10 rounded-full mx-auto mb-2" />
+                <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} size={150} round="20px" className="h-9/10 w-9/10 rounded-full mx-auto mb-2" />
                 <h2 className="text-3xl font-semibold text-white">{userData.name}</h2>
                 <p className="text-lg text-white">{userData.email}</p>
               </div>
@@ -143,11 +149,11 @@ function UserPage() {
         <div className="container mx-auto px-8">
           <h3 className="text-2xl font-semibold mb-4">My Notes</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {userNotes.map((note, index) => (
+            {userData.pdfLinks.map((note, index) => (
               <div key={index} className="bg-primary p-4 rounded-lg shadow-md h-40">
-              <a href={note.notelink}>
-                <h4 className="text-xl text-white font-semibold mb-2">{note.title}</h4>
-                <p>{note.content}</p>
+              <a href={note} target="_blank" rel="noopener noreferrer">
+                <h4 className="text-xl text-white font-semibold mb-2"><FontAwesomeIcon icon={faFilePdf} />Note {index + 1}</h4>
+                <p className="text-xl text-white font-semibold mb-2">{note}</p>
                 </a>
               </div>
             ))}
