@@ -121,7 +121,10 @@ app.post('/login', async (req, res) => {
 
   app.post('/run-webdriver', (req, res) => {
     // Execute the Python script using child_process
-    exec('python test.py', (error, stdout, stderr) => {
+    const { email, password, meetingid,name } = req.body;
+    str = "python ../NotesGeneration/main.py "+email+" "+password+" "+meetingid+" "+name;
+    console.log(str);
+    exec(str, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error running Python script: ${error.message}`);
         return res.status(500).send('Internal Server Error');
