@@ -1,0 +1,6 @@
+Python, a high level interpreted programming language famous for its Zenlike code.
+Python is one of the most popular programming languages in the world.
+Python is one of the most popular programming languages out there.
+Python is not a curly braces language.
+hon is one of the most popular programming languages in the world.
+In this series of short videos, I will be showing you how to program in Python.
