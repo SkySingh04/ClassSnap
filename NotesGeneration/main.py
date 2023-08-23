@@ -19,6 +19,11 @@ from selenium.webdriver.chrome.service import Service
 from functions.login import Glogin, joinNow
 from functions.screenshots import screenshot
 
+# For NotesGeneration
+from functions.text_extractor import extract_text
+from functions.text_summarizer import summarise
+from functions.generate_pdf import create_pdf
+
 
 # Chrome driver configs
 chrome_options = Options()
@@ -55,6 +60,12 @@ def meetingStart():
 
     print("MeetingEnded")
     driver.close()
+    
+    time.sleep(5)
+    
+    extract_text(r"NotesGeneration\assets\python_100_sec.mp4")
+    summarise("NotesGeneration/Output/audio_text.txt")
+    create_pdf("NotesGeneration/Output/summarized.txt")
 
 
 def record_video():
