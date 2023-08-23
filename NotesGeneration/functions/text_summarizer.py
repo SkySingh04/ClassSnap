@@ -1,21 +1,30 @@
-from transformers import BertTokenizer, BertForSeq2SeqLM
-import torch
+from transformers import PegasusForConditionalGeneration, PegasusTokenizer
 
-def summarize_with_bert(input_text, max_output_length=1000):
-    tokenizer = BertTokenizer.from_pretrained("facebook/bart-large-cnn")
-    model = BertForSeq2SeqLM.from_pretrained("facebook/bart-large-cnn")
+tokenizer = PegasusTokenizer.from_pretrained("google/pegasus-xsum")
+model = PegasusForConditionalGeneration.from_pretrained("google/pegasus-xsum")
 
-    inputs = tokenizer(input_text, return_tensors="pt", max_length=1024, truncation=True)
-    summary_ids = model.generate(inputs["input_ids"], max_length=max_output_length, num_beams=4, early_stopping=True)
+def summarise(text_file: str):
+    """Summarises the document
 
-    summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-    return summary
+    Args:
+        text_file (str): path of the text file
+    """
 
-# Example usage
-input_notes = """
-Your input notes here. These can be a large number of lines that you want to summarize using BERT.
-BERT is a powerful transformer-based model that can generate abstractive summaries of text.
-"""
+    with open(text_file, "r") as f:
+        text = f.read()
 
-summary = summarize_with_bert(input_notes, max_output_length=100)
-print(summary)
+    # Split the input text into chunks of 512 tokens
+    chunk_size = 512
+    chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+
+    # Generate a summary for each chunk
+    summaries = []
+    for chunk in chunks:
+        input_ids = tokenizer.encode(chunk, return_tensors='pt')
+        summary_ids = model.generate(input_ids, max_length=50)
+        summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+        summaries.append(summary)
+
+    # Join the summaries back into a single string
+    summary_text = "\n".join(summaries)
+    print(summary_text)
