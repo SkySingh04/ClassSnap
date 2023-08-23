@@ -121,8 +121,8 @@ app.post('/login', async (req, res) => {
 
   app.post('/run-webdriver', (req, res) => {
     // Execute the Python script using child_process
-    const { email, password, meetingid,name } = req.body;
-    str = "python ../NotesGeneration/main.py "+email+" "+password+" "+meetingid+" "+name;
+    const { email, password, meetingid,name,usn } = req.body;
+    str = "python ../NotesGeneration/main.py "+email+" "+password+" "+meetingid+" "+name+" "+usn;
     console.log(str);
     exec(str, (error, stdout, stderr) => {
       if (error) {
@@ -133,6 +133,28 @@ app.post('/login', async (req, res) => {
       console.log(`Python script output: ${stdout}`);
       res.status(200).send('Python script executed successfully');
     });
+  });
+
+  app.post('/upload-link', async (req, res) => {
+    try {
+      const { usn, pdf_url } = req.body;
+  
+      // Handle the PDF URL as needed, e.g., save it to the user's pdfLinks array
+      const user = await User.findOne({ usn });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Update the user's pdfLinks array with the new PDF link
+      user.pdfLinks.push(pdf_url);
+      await user.save();
+  
+      res.status(200).json({ message: 'PDF link added successfully' });
+    } catch (error) {
+      console.error('Error handling PDF link:', error);
+      res.status(500).json({ error: 'An error occurred' });
+    }
   });
 
   
