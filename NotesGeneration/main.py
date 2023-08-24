@@ -3,6 +3,9 @@ import cv2
 import numpy as np
 import pyautogui
 import sys
+import pyaudio
+import wave
+import threading
 
 
 from selenium import webdriver
@@ -67,6 +70,26 @@ def meetingStart():
     summarise("NotesGeneration/Output/audio_text.txt")
     create_pdf("NotesGeneration/Output/summarized.txt")
 
+#record audio
+def record_audio(audio_frames):
+    audio_recorder = pyaudio.PyAudio()
+
+    audio_stream = audio_recorder.open(
+        format=pyaudio.paInt16,
+        channels=2,
+        rate=44100,
+        input=True,
+        frames_per_buffer=1024,
+    )
+
+    while not meeting_end:
+        audio_data = audio_stream.read(1024)
+        audio_frames.append(audio_data)
+
+    audio_stream.stop_stream()
+    audio_stream.close()
+    audio_recorder.terminate()
+
 
 def record_video():
     codec = cv2.VideoWriter_fourcc(*"XVID")
@@ -79,6 +102,10 @@ def record_video():
     cv2.resizeWindow(
         "Recording", 480, 270
     )  # Here we are resizing the window to 480x270 so that the program doesn't run in full screen in the beginning
+
+    audio_frames = []
+    audio_thread = threading.Thread(target=record_audio, args=(audio_frames,))
+    audio_thread.start()
 
     global meeting_end
     while meeting_end == False:
@@ -96,6 +123,14 @@ def record_video():
 
     out.release()  # closing the video file
     cv2.destroyAllWindows()  # destroying the recording window
+
+     # Save audio frames to a WAV file
+    audio_recording = b"".join(audio_frames)
+    with wave.open("RecordedAudio.wav", "wb") as audio_file:
+        audio_file.setnchannels(2)
+        audio_file.setsampwidth(2)
+        audio_file.setframerate(44100)
+        audio_file.writeframes(audio_recording)
 
 
 # ADD CREDENTIALS OF BOT HERE
