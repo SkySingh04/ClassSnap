@@ -37,7 +37,7 @@ Watch our [demo video](https://youtu.be/c7Uv2kCQrRw) to see ClassSnap in action.
 
 * [**Akash Singh**](https://github.com/Akash-Singh04)
 
-See also the list of [contributors](https://github.com/Akash-Singh04/QuizQuest/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/Akash-Singh04/ClassSnap/contributors) who participated in this project.
 
 ## License
 
